@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
+import 'package:we_link_app/models/response.dart';
+import 'package:we_link_app/providers/auth_provider.dart';
 import 'package:we_link_app/res/colors.dart';
 import 'package:we_link_app/res/ui.dart';
 import 'package:we_link_app/views/components/textfield.dart';
@@ -16,6 +20,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   late TextEditingController _passwordCtrl;
   late TextEditingController _passwordRepeatCtrl;
   late TextEditingController _emailCtrl;
+  List? errors;
 
   @override
   void initState() {
@@ -28,8 +33,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
   final _formKey = GlobalKey<FormState>();
 
+
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       backgroundColor: AppColors.scaffoldColor,
       body: Padding(
@@ -80,11 +88,23 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   ])),
               SizedBox(height: 40),
               GestureDetector(
-                onTap: () {
+                onTap: () async {
+                  var state = Navigator.of(context);
                   if (_formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing Data')),
-                    );
+                    Response res = await context
+                        .read<AuthProvider>()
+                        .createUser(
+                            username: _usernameCtrl.value.text,
+                            password: _passwordCtrl.value.text,
+                            email: _emailCtrl.value.text);
+                    if (res.status == ResponseStatus.success) {
+                      state.pushReplacementNamed('/login');
+                      return;
+                    } else {
+                      setState(() {
+                        errors = res.errors!;
+                      });
+                    }
                   }
                 },
                 child: Container(
@@ -93,11 +113,17 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(10)),
                   child: Center(
-                    child: Text(
-                      "Create my account",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w700),
-                    ),
+                    child: !context.watch<AuthProvider>().isLoading
+                        ? Text(
+                            "Create my account",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700),
+                          )
+                        : SpinKitThreeBounce(
+                            color: Colors.white,
+                            size: 13,
+                          ),
                   ),
                 ),
               ),
@@ -108,6 +134,16 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   "Already have an account? Login",
                   style: TextStyle(fontSize: 13),
                 ),
+              ),
+              SizedBox(height: 20),
+              SizedBox(
+                child: errors != null
+                    ? Text(
+                        errors![0],
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 13, color: Colors.redAccent),
+                      )
+                    : null,
               ),
             ],
           ),
