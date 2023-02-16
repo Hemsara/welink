@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => CreateAccountScreen(),
       },
       debugShowCheckedModeBanner: false,
-      initialRoute: '/signup',
+      initialRoute: '/home',
     );
   }
 }
