@@ -33,7 +33,7 @@ class WeLinkApp extends StatelessWidget {
         '/signup': (context) => CreateAccountScreen(),
       },
       debugShowCheckedModeBanner: false,
-      initialRoute: '/signup',
+      initialRoute: '/login',
     );
   }
 }

@@ -28,7 +28,7 @@ class NetworkService {
         body: jsonEncode(data),
         headers: headers,
       );
-      if (response.statusCode == 201) {
+      if (response.statusCode == 201 || response.statusCode == 200) {
         return Response(status: ResponseStatus.success);
       }
 

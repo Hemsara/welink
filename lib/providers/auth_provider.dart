@@ -8,6 +8,25 @@ class AuthProvider extends ChangeNotifier {
 
   final NetworkService _networkService =
       NetworkService(baseURL: 'http://127.0.0.1:8000/api');
+
+  Future<Response> login(String username, String password) async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+
+      await Future.delayed(const Duration(seconds: 1));
+      Response res = await _networkService.post(
+          mustAuthenticated: false,
+          endpoint: '/login/',
+          data: {"username": username, "password": password});
+      _isLoading = false;
+      notifyListeners();
+      return res;
+    } catch (e) {
+      return Response(status: ResponseStatus.failed, errors: [e]);
+    }
+  }
+
   Future<Response> createUser(
       {required String email,
       required String username,
@@ -29,8 +48,7 @@ class AuthProvider extends ChangeNotifier {
       return rs;
     } catch (e) {
       return Response(
-          status: ResponseStatus.failed,
-          errors: ["something went wrong"]);
+          status: ResponseStatus.failed, errors: ["something went wrong"]);
     }
   }
 }

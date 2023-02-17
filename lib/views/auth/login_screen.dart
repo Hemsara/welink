@@ -3,6 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
+import 'package:we_link_app/models/response.dart';
+import 'package:we_link_app/providers/auth_provider.dart';
 import 'package:we_link_app/res/colors.dart';
 import 'package:we_link_app/res/ui.dart';
 import 'package:we_link_app/views/components/textfield.dart';
@@ -18,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController _usernameCtrl;
   late TextEditingController _passwordCtrl;
   final _formKey = GlobalKey<FormState>();
+  List? errors;
 
   @override
   void initState() {
@@ -67,11 +72,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   )),
               SizedBox(height: 40),
               GestureDetector(
-                onTap: () {
+                onTap: () async {
+                  NavigatorState state = Navigator.of(context);
                   if (_formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing Data')),
-                    );
+                    Response rs = await context
+                        .read<AuthProvider>()
+                        .login(_usernameCtrl.text, _passwordCtrl.text);
+                    if (rs.status == ResponseStatus.success) {
+                      state.pushReplacementNamed('/home');
+                    } else {
+                      setState(() {
+                        errors = rs.errors!;
+                      });
+                    }
                   }
                 },
                 child: Container(
@@ -80,11 +93,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(10)),
                   child: Center(
-                    child: Text(
-                      "Login",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w700),
-                    ),
+                    child: !context.watch<AuthProvider>().isLoading
+                        ? Text(
+                            "Login",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700),
+                          )
+                        : SpinKitThreeBounce(
+                            color: Colors.white,
+                            size: 13,
+                          ),
                   ),
                 ),
               ),
@@ -95,6 +114,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   "Don't have an account? Create a one",
                   style: TextStyle(fontSize: 13),
                 ),
+              ),
+              SizedBox(height: 20),
+              SizedBox(
+                child: errors != null
+                    ? Text(
+                        errors![0],
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 13, color: Colors.redAccent),
+                      )
+                    : null,
               ),
             ],
           ),
