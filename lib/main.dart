@@ -46,8 +46,8 @@ class WeLinkApp extends StatelessWidget {
 
 Future<bool> checkAuthenticated() async {
   try {
-    NetworkService _api = NetworkService(baseURL: 'http://127.0.0.1:8000/api');
-    Response rs = await _api.get(mustAuthenticated: true, endpoint: '/auth');
+    NetworkService api = NetworkService(baseURL: 'http://127.0.0.1:8000/api');
+    Response rs = await api.get(mustAuthenticated: true, endpoint: '/auth');
     if (rs.status == ResponseStatus.success) {
       return true;
     }
