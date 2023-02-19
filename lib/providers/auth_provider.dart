@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:we_link_app/models/response.dart';
 import 'package:we_link_app/services/network_service.dart';
 
@@ -19,6 +20,12 @@ class AuthProvider extends ChangeNotifier {
           mustAuthenticated: false,
           endpoint: '/login/',
           data: {"username": username, "password": password});
+      final storage = FlutterSecureStorage();
+      await storage.deleteAll();
+
+// Write value
+      await storage.write(key: 'token', value: res.data!['token']);
+
       _isLoading = false;
       notifyListeners();
       return res;

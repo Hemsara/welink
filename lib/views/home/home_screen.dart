@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
           ),
           const CircleAvatar(
               backgroundImage: NetworkImage(
-                  'https://instagram.fcmb4-2.fna.fbcdn.net/v/t51.2885-19/276978157_264760199193892_6709045983454783025_n.jpg?stp=dst-jpg_s320x320&_nc_ht=instagram.fcmb4-2.fna.fbcdn.net&_nc_cat=104&_nc_ohc=zOrCEzXHhEAAX97gDvy&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfCGDd8emC89NzCwXkO7eI11imcD2wqLPYpcRVIdHEH5ig&oe=63EE6E1F&_nc_sid=8fd12b'))
+                  'https://instagram.fcmb11-1.fna.fbcdn.net/v/t51.2885-19/276978157_264760199193892_6709045983454783025_n.jpg?stp=dst-jpg_s320x320&_nc_ht=instagram.fcmb11-1.fna.fbcdn.net&_nc_cat=104&_nc_ohc=SvD2rX8-G7UAX8q0ZLo&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfBE_YHCCAEYgE4MgPw7uN3tnuuhnmL64OM-guxYdeKsFQ&oe=63F8515F&_nc_sid=8fd12b'))
         ],
       ),
     );
