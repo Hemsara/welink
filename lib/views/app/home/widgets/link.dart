@@ -5,10 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:we_link_app/models/links/link.dart';
 
-class Link extends StatelessWidget {
+class Link extends StatefulWidget {
   final LinkModel link;
 
   const Link({super.key, required this.link});
+
+  @override
+  State<Link> createState() => _LinkState();
+}
+
+class _LinkState extends State<Link> {
+  bool switchValue = true;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +42,7 @@ class Link extends StatelessWidget {
               children: [
                 CircleAvatar(
                   backgroundColor: Color.fromARGB(255, 247, 247, 247),
-                  child: link.icon.isEmpty
+                  child: widget.link.icon.isEmpty
                       ? Icon(
                           Iconsax.image,
                           size: 15,
@@ -48,7 +55,7 @@ class Link extends StatelessWidget {
                               borderRadius: BorderRadius.circular(0),
                               image: DecorationImage(
                                   image: NetworkImage(
-                                      'http://127.0.0.1:8000${link.icon}'),
+                                      'http://127.0.0.1:8000${widget.link.icon}'),
                                   fit: BoxFit.cover)),
                         ),
                 ),
@@ -58,24 +65,102 @@ class Link extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      link.label,
+                      widget.link.label,
                       style:
-                          TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+                          TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
                     ),
                     Text(
-                      link.href,
+                      widget.link.href,
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
-                          fontSize: 13,
+                          fontSize: 12,
                           color: Colors.grey),
                     ),
                   ],
                 ),
               ],
             ),
-            Icon(
-              CupertinoIcons.ellipsis_vertical,
-              size: 16,
+            PopupMenuButton(
+              icon: Icon(
+                CupertinoIcons.ellipsis_vertical,
+                size: 16,
+                color: Colors.grey.withOpacity(0.5),
+              ),
+              elevation: 0.2,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              onSelected: (value) {},
+              itemBuilder: (context) {
+                return [
+                  PopupMenuItem(
+                    value: 'Home',
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Add to WeLink',
+                          style: TextStyle(
+                              color: Colors.black45,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        Transform.scale(
+                          scale: 0.75,
+                          child: CupertinoSwitch(
+                            value: switchValue,
+                            activeColor: CupertinoColors.activeGreen,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                switchValue = value ?? false;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 'Home',
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Edit Link',
+                          style: TextStyle(
+                              color: Colors.black45,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        Icon(
+                          Iconsax.edit,
+                          size: 16,
+                          color: Colors.black45,
+                        )
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 'Home',
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Delete Link',
+                          style: TextStyle(
+                              color: Colors.redAccent,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        Icon(
+                          Iconsax.trash,
+                          size: 16,
+                          color: Colors.redAccent,
+                        )
+                      ],
+                    ),
+                  ),
+                ];
+              },
             )
           ],
         ),
