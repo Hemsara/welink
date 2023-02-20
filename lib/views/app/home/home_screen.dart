@@ -1,4 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:we_link_app/providers/links_provider.dart';
@@ -161,10 +164,30 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: AppColors.blueColor,
                                 fontWeight: FontWeight.w500),
                           ),
-                          Icon(
-                            Iconsax.copy,
-                            color: AppColors.blueColor,
-                            size: 18,
+                          GestureDetector(
+                            onTap: () async {
+                              await Clipboard.setData(ClipboardData(
+                                text: "we.link/${value.profile.user.username}",
+                              ));
+
+                              final snackBar = SnackBar(
+                                backgroundColor:
+                                    Color.fromARGB(255, 242, 242, 242),
+                                content: const Text(
+                                  'Copied to clipboard🔥',
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 76, 75, 75)),
+                                ),
+                                // Some code to undo the change.
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            },
+                            child: Icon(
+                              Iconsax.copy,
+                              color: AppColors.blueColor,
+                              size: 18,
+                            ),
                           ),
                         ],
                       ),
