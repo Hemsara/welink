@@ -35,11 +35,22 @@ class Link extends StatelessWidget {
               children: [
                 CircleAvatar(
                   backgroundColor: Color.fromARGB(255, 247, 247, 247),
-                  child: Icon(
-                    Iconsax.image,
-                    size: 15,
-                    color: Colors.grey,
-                  ),
+                  child: link.icon.isEmpty
+                      ? Icon(
+                          Iconsax.image,
+                          size: 15,
+                          color: Colors.grey,
+                        )
+                      : Container(
+                          width: 17,
+                          height: 17,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(0),
+                              image: DecorationImage(
+                                  image: NetworkImage(
+                                      'http://127.0.0.1:8000${link.icon}'),
+                                  fit: BoxFit.cover)),
+                        ),
                 ),
                 SizedBox(width: 10),
                 Column(
