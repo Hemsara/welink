@@ -33,11 +33,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
   final _formKey = GlobalKey<FormState>();
 
-
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       backgroundColor: AppColors.scaffoldColor,
       body: Padding(

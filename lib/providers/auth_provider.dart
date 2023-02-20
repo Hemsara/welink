@@ -20,11 +20,11 @@ class AuthProvider extends ChangeNotifier {
           mustAuthenticated: false,
           endpoint: '/login/',
           data: {"username": username, "password": password});
-      final storage = FlutterSecureStorage();
-      await storage.deleteAll();
-
-// Write value
-      await storage.write(key: 'token', value: res.data!['token']);
+      if (res.status == ResponseStatus.success) {
+        final storage = FlutterSecureStorage();
+        await storage.deleteAll();
+        await storage.write(key: 'token', value: res.data!['token']);
+      }
 
       _isLoading = false;
       notifyListeners();

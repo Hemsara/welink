@@ -10,10 +10,10 @@ class User(AbstractUser):
 
 class LinkProfile(models.Model):
     profile_title = models.CharField(max_length=50)
-    description = models.CharField(max_length=50)
-    views = models.IntegerField()
+    description = models.CharField(max_length=250, null=True, blank=True)
+    views = models.IntegerField(null=True, blank=True, default=0)
     user = models.OneToOneField("User", on_delete=models.CASCADE)
-    avatar = models.ImageField()
+    avatar = models.ImageField(null=True, blank=True)
 
 
 class Link(models.Model):

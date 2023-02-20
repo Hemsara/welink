@@ -44,9 +44,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            const CircleAvatar(
-                backgroundImage: NetworkImage(
-                    'https://instagram.fcmb11-1.fna.fbcdn.net/v/t51.2885-19/276978157_264760199193892_6709045983454783025_n.jpg?stp=dst-jpg_s320x320&_nc_ht=instagram.fcmb11-1.fna.fbcdn.net&_nc_cat=104&_nc_ohc=SvD2rX8-G7UAX8q0ZLo&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfBE_YHCCAEYgE4MgPw7uN3tnuuhnmL64OM-guxYdeKsFQ&oe=63F8515F&_nc_sid=8fd12b'))
+            CircleAvatar(
+                backgroundColor: AppColors.blueColor.withOpacity(0.1),
+                backgroundImage: value.profile.avatar != null
+                    ? NetworkImage(
+                        'https://instagram.fcmb11-1.fna.fbcdn.net/v/t51.2885-19/276978157_264760199193892_6709045983454783025_n.jpg?stp=dst-jpg_s320x320&_nc_ht=instagram.fcmb11-1.fna.fbcdn.net&_nc_cat=104&_nc_ohc=SvD2rX8-G7UAX8q0ZLo&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfBE_YHCCAEYgE4MgPw7uN3tnuuhnmL64OM-guxYdeKsFQ&oe=63F8515F&_nc_sid=8fd12b')
+                    : null,
+                child: value.profile.avatar == null
+                    ? Icon(
+                        Iconsax.user,
+                        size: 17,
+                      )
+                    : null)
           ],
         );
       }),
@@ -117,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const Color(0xffE2E2FF),
                         "Clicks",
-                        "25"),
+                        "0"),
                   ],
                 ),
                 const SizedBox(height: 30),
@@ -132,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const Color(0xFFE2FEE9),
                         "Avg CTR",
-                        "64.7%"),
+                        "00.0%"),
                     overviewItem(
                         const Icon(
                           Iconsax.timer,
@@ -141,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const Color(0xffFEE2EC),
                         "Avg Time",
-                        "9.4"),
+                        "0.0"),
                   ],
                 ),
                 const SizedBox(height: 40),

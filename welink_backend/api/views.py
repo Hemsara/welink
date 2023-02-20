@@ -29,5 +29,10 @@ def checkAuthenticated(request):
 def overview(request):
 
     profile = models.LinkProfile.objects.get(user=request.user)
+    if profile:
+        serializer = LinkProfileSerializer(profile)
+        return Response({"data": serializer.data})
+    profile = models.LinkProfile.objects.create(
+        user=request.user, profile_title=request.user.username)
     serializer = LinkProfileSerializer(profile)
     return Response({"data": serializer.data})
