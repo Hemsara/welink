@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:we_link_app/models/response.dart';
 import 'package:we_link_app/providers/auth_provider.dart';
+import 'package:we_link_app/providers/links_provider.dart';
 import 'package:we_link_app/services/network_service.dart';
 import 'package:we_link_app/views/auth/create_account_screen.dart';
 import 'package:we_link_app/views/auth/login_screen.dart';
-import 'package:we_link_app/views/home/home_screen.dart';
+import 'package:we_link_app/views/app/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +19,9 @@ void main() async {
       providers: [
         ChangeNotifierProvider(
           create: (context) => AuthProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LinkProvider(),
         ),
       ],
       child: WeLinkApp(auth: auth),
@@ -34,7 +38,7 @@ class WeLinkApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        '/home': (context) => HomeScreen(),
+        '/home': (context) => Home(),
         '/login': (context) => LoginScreen(),
         '/signup': (context) => CreateAccountScreen(),
       },
