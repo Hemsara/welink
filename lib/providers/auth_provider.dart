@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:we_link_app/models/response.dart';
+import 'package:we_link_app/models/others/response.dart';
 import 'package:we_link_app/services/network_service.dart';
 
 class AuthProvider extends ChangeNotifier {

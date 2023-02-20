@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:we_link_app/models/response.dart';
+import 'package:we_link_app/models/others/response.dart';
 
 class NetworkService {
   final String baseURL;
@@ -53,7 +53,6 @@ class NetworkService {
       };
       if (mustAuthenticated) {
         var value = await storage.read(key: 'token');
-        print(value);
         headers["Authorization"] = "Token $value";
       }
       var response = await http.get(
@@ -61,12 +60,16 @@ class NetworkService {
         headers: headers,
       );
       if (response.statusCode == 200) {
-        return Response(status: ResponseStatus.success);
+        return Response(
+            status: ResponseStatus.success, data: jsonDecode(response.body));
       }
 
       List err = jsonDecode(response.body).values.map((e) => e[0]).toList();
 
-      return Response(status: ResponseStatus.failed, errors: err);
+      return Response(
+          status: ResponseStatus.failed,
+          errors: err,
+          data: jsonDecode(response.body));
     } catch (e) {
       rethrow;
     }

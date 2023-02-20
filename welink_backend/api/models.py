@@ -9,7 +9,7 @@ class User(AbstractUser):
 
 
 class LinkProfile(models.Model):
-    display_name = models.CharField(max_length=50)
+    profile_title = models.CharField(max_length=50)
     description = models.CharField(max_length=50)
     views = models.IntegerField()
     user = models.OneToOneField("User", on_delete=models.CASCADE)

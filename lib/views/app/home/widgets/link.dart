@@ -2,11 +2,13 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:we_link_app/models/links/link.dart';
 
 class Link extends StatelessWidget {
-  const Link({super.key});
+  final LinkModel link;
+
+  const Link({super.key, required this.link});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,15 @@ class Link extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 15),
         height: 80,
         decoration: BoxDecoration(
-            color: Color(0xffF5F8FE), borderRadius: BorderRadius.circular(15)),
+          boxShadow: [
+            BoxShadow(
+                color: Color.fromARGB(255, 222, 222, 222),
+                spreadRadius: -5,
+                blurRadius: 10),
+          ],
+          color: Color.fromARGB(255, 255, 255, 255),
+          borderRadius: BorderRadius.circular(15),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -24,7 +34,12 @@ class Link extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CircleAvatar(
-                  backgroundColor: Colors.pinkAccent,
+                  backgroundColor: Color.fromARGB(255, 247, 247, 247),
+                  child: Icon(
+                    Iconsax.image,
+                    size: 15,
+                    color: Colors.grey,
+                  ),
                 ),
                 SizedBox(width: 10),
                 Column(
@@ -32,12 +47,12 @@ class Link extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Dribble",
+                      link.label,
                       style:
                           TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
                     ),
                     Text(
-                      "https://dribbble.com/Hemsara",
+                      link.href,
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 13,

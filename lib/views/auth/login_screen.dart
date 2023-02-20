@@ -5,7 +5,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
-import 'package:we_link_app/models/response.dart';
+import 'package:we_link_app/models/others/response.dart';
 import 'package:we_link_app/providers/auth_provider.dart';
 import 'package:we_link_app/res/colors.dart';
 import 'package:we_link_app/res/ui.dart';

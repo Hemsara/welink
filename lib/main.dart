@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:we_link_app/models/response.dart';
+import 'package:we_link_app/models/others/response.dart';
 import 'package:we_link_app/providers/auth_provider.dart';
 import 'package:we_link_app/providers/links_provider.dart';
 import 'package:we_link_app/services/network_service.dart';
