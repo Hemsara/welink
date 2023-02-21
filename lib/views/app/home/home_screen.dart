@@ -127,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const Color(0xffE2E2FF),
                         "Clicks",
-                        "0"),
+                        value.profile.clicks.toString()),
                   ],
                 ),
                 const SizedBox(height: 30),
@@ -142,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const Color(0xFFE2FEE9),
                         "Avg CTR",
-                        "00.0%"),
+                        "${((value.profile.clicks / value.profile.views) * 100).toStringAsFixed(2)}%"),
                     overviewItem(
                         const Icon(
                           Iconsax.timer,
@@ -169,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "we.link/${value.profile.user.username}",
+                            "${AppConstants.host}/${value.profile.user.username}",
                             style: TextStyle(
                                 color: AppColors.blueColor,
                                 fontWeight: FontWeight.w500),

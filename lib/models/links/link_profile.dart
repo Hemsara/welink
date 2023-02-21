@@ -7,11 +7,13 @@ class LinkProfile {
   final String profileTitle;
   final String description;
   final int views;
+  final int clicks;
   final List<LinkModel> links;
   final String? avatar;
   LinkProfile({
     required this.id,
     required this.user,
+    required this.clicks,
     required this.profileTitle,
     required this.description,
     required this.views,
@@ -25,6 +27,7 @@ class LinkProfile {
 
     return LinkProfile(
         id: parsedJson['id'],
+        clicks: parsedJson['clicks'],
         user: User.fromJson(parsedJson['user']),
         profileTitle: parsedJson['profile_title'],
         description: parsedJson['description'] ?? "",

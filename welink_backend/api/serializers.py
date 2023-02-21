@@ -33,10 +33,18 @@ class LinkSerializer(serializers.ModelSerializer):
 class LinkProfileSerializer(serializers.ModelSerializer):
     links = serializers.SerializerMethodField()
     user = UserSerializer()
+    clicks = serializers.SerializerMethodField()
 
     class Meta:
         model = LinkProfile
         fields = "__all__"
+
+    def get_clicks(self, obj):
+        clicks = 0
+        links = Link.objects.filter(profile=obj)
+        for x in links:
+            clicks += x.clicks
+        return clicks
 
     def get_links(self, obj):
         links = Link.objects.filter(profile=obj)

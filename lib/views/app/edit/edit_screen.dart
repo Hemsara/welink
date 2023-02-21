@@ -114,7 +114,9 @@ class _EditLinkProfileState extends State<EditLinkProfile> {
                             color: Colors.grey),
                       ),
                       TextField(
-                        decoration: InputDecoration(border: InputBorder.none),
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: val.profile.profileTitle),
                       )
                     ],
                   ),
@@ -139,7 +141,10 @@ class _EditLinkProfileState extends State<EditLinkProfile> {
                       ),
                       TextField(
                         maxLines: 5,
-                        decoration: InputDecoration(border: InputBorder.none),
+                        decoration: InputDecoration(
+                          hintText: val.profile.description,
+                          border: InputBorder.none,
+                        ),
                       )
                     ],
                   ),
@@ -162,7 +167,7 @@ class _EditLinkProfileState extends State<EditLinkProfile> {
             height: 300,
             decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(15),
                 border: Border.all(color: Color.fromARGB(255, 234, 234, 234))),
           ),
           SizedBox(height: 6),
