@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:we_link_app/models/others/response.dart';
 import 'package:we_link_app/providers/auth_provider.dart';
 import 'package:we_link_app/providers/links_provider.dart';
+import 'package:we_link_app/res/constants.dart';
 import 'package:we_link_app/services/network_service.dart';
 import 'package:we_link_app/views/auth/create_account_screen.dart';
 import 'package:we_link_app/views/auth/login_screen.dart';
@@ -50,7 +51,7 @@ class WeLinkApp extends StatelessWidget {
 
 Future<bool> checkAuthenticated() async {
   try {
-    NetworkService api = NetworkService(baseURL: 'http://127.0.0.1:8000/api');
+    NetworkService api = NetworkService(baseURL: '${AppConstants.host}/api');
     Response rs = await api.get(mustAuthenticated: true, endpoint: '/auth');
     if (rs.status == ResponseStatus.success) {
       return true;

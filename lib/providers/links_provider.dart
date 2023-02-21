@@ -5,9 +5,11 @@ import 'package:we_link_app/models/links/link_profile.dart';
 import 'package:we_link_app/models/others/response.dart';
 import 'package:we_link_app/services/network_service.dart';
 
+import '../res/constants.dart';
+
 class LinkProvider extends ChangeNotifier {
   final NetworkService _networkService =
-      NetworkService(baseURL: 'http://127.0.0.1:8000/api');
+      NetworkService(baseURL: '${AppConstants.host}/api');
   bool _fetching = false;
 
   bool get fetching => _fetching;

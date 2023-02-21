@@ -6,6 +6,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:we_link_app/providers/links_provider.dart';
 import 'package:we_link_app/res/colors.dart';
+import 'package:we_link_app/res/constants.dart';
 import 'package:we_link_app/res/ui.dart';
 import 'package:we_link_app/views/app/home/widgets/link.dart';
 
@@ -48,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 backgroundColor: AppColors.blueColor.withOpacity(0.1),
                 backgroundImage: value.profile.avatar != null
                     ? NetworkImage(
-                        'https://instagram.fcmb11-1.fna.fbcdn.net/v/t51.2885-19/276978157_264760199193892_6709045983454783025_n.jpg?stp=dst-jpg_s320x320&_nc_ht=instagram.fcmb11-1.fna.fbcdn.net&_nc_cat=104&_nc_ohc=SvD2rX8-G7UAX8q0ZLo&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfBE_YHCCAEYgE4MgPw7uN3tnuuhnmL64OM-guxYdeKsFQ&oe=63F8515F&_nc_sid=8fd12b')
+                        '${AppConstants.host}${value.profile.avatar}')
                     : null,
                 child: value.profile.avatar == null
                     ? Icon(

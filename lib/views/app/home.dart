@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:we_link_app/res/colors.dart';
+import 'package:we_link_app/views/app/edit/edit_screen.dart';
 import 'package:we_link_app/views/app/home/home_screen.dart';
 
 class Home extends StatefulWidget {
@@ -17,9 +18,7 @@ class _HomeState extends State<Home> {
     Text(
       'Index 1: Business',
     ),
-    Text(
-      'Index 2: School',
-    ),
+    EditLinkProfile(),
   ];
   void _onItemTapped(int index) {
     setState(() {
@@ -31,6 +30,8 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
+          unselectedLabelStyle: const TextStyle(fontSize: 11),
+          selectedLabelStyle: const TextStyle(fontSize: 11),
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,
           type: BottomNavigationBarType.fixed,
@@ -44,7 +45,7 @@ class _HomeState extends State<Home> {
               icon: Icon(Iconsax.chart),
             ),
             BottomNavigationBarItem(
-              label: "Edit",
+              label: "Appearance",
               icon: Icon(Iconsax.edit),
             ),
             BottomNavigationBarItem(

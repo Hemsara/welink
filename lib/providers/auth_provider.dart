@@ -3,12 +3,14 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:we_link_app/models/others/response.dart';
 import 'package:we_link_app/services/network_service.dart';
 
+import '../res/constants.dart';
+
 class AuthProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
   final NetworkService _networkService =
-      NetworkService(baseURL: 'http://127.0.0.1:8000/api');
+      NetworkService(baseURL: '${AppConstants.host}/api');
 
   Future<Response> login(String username, String password) async {
     try {
