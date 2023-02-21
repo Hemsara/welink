@@ -1,7 +1,9 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:we_link_app/providers/links_provider.dart';
@@ -45,18 +47,73 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            CircleAvatar(
-                backgroundColor: AppColors.blueColor.withOpacity(0.1),
-                backgroundImage: value.profile.avatar != null
-                    ? NetworkImage(
-                        '${AppConstants.host}${value.profile.avatar}')
-                    : null,
-                child: value.profile.avatar == null
-                    ? Icon(
-                        Iconsax.user,
-                        size: 17,
-                      )
-                    : null)
+            PopupMenuButton(
+              icon: CircleAvatar(
+                  backgroundColor: AppColors.blueColor.withOpacity(0.1),
+                  backgroundImage: value.profile.avatar != null
+                      ? NetworkImage(
+                          '${AppConstants.host}${value.profile.avatar}')
+                      : null,
+                  child: value.profile.avatar == null
+                      ? Icon(
+                          Iconsax.user,
+                          size: 17,
+                        )
+                      : null),
+              elevation: 0.2,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              onSelected: (value) {},
+              itemBuilder: (context) {
+                return [
+                  PopupMenuItem(
+                    onTap: () async {
+                      final storage = FlutterSecureStorage();
+                      await storage.deleteAll();
+                      Navigator.pushReplacementNamed(context, '/login');
+                    },
+                    value: 'Home',
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text(
+                          'LogOut',
+                          style: TextStyle(
+                              color: Colors.black45,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        Icon(
+                          Iconsax.logout,
+                          size: 16,
+                          color: Colors.black45,
+                        )
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 'Home',
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text(
+                          'Settings',
+                          style: TextStyle(
+                              color: Colors.redAccent,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        Icon(
+                          Iconsax.setting,
+                          size: 16,
+                          color: Colors.redAccent,
+                        )
+                      ],
+                    ),
+                  ),
+                ];
+              },
+            ),
           ],
         );
       }),
@@ -142,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const Color(0xFFE2FEE9),
                         "Avg CTR",
-                        "${((value.profile.clicks / value.profile.views) * 100).toStringAsFixed(2)}%"),
+                        "${((value.profile.clicks / value.profile.views) * 100 > 0 ? (value.profile.clicks / value.profile.views) * 100 : 0).toStringAsFixed(1)}%"),
                     overviewItem(
                         const Icon(
                           Iconsax.timer,
