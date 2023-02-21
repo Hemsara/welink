@@ -42,7 +42,7 @@ class _EditLinkProfileState extends State<EditLinkProfile> {
                           ? NetworkImage(
                               '${AppConstants.host}${val.profile.avatar}')
                           : null,
-                      backgroundColor: val.profile.avatar != null
+                      backgroundColor: val.profile.avatar == null
                           ? AppColors.blueColor.withOpacity(0.2)
                           : null,
                       radius: 50,
