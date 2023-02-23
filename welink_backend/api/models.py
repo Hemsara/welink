@@ -21,4 +21,4 @@ class Link(models.Model):
     label = models.CharField(max_length=50)
     href = models.CharField(max_length=50)
     icon = models.ImageField()
-    clicks = models.IntegerField()
+    clicks = models.IntegerField(default=0)

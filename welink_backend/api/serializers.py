@@ -30,6 +30,12 @@ class LinkSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class LinkViewOnlySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Link
+        fields = ('id', 'label', 'href', 'icon')
+
+
 class LinkProfileSerializer(serializers.ModelSerializer):
     links = serializers.SerializerMethodField()
     user = UserSerializer()
@@ -50,4 +56,17 @@ class LinkProfileSerializer(serializers.ModelSerializer):
         links = Link.objects.filter(profile=obj)
         print(links)
         data = LinkSerializer(links, many=True).data
+        return data
+
+
+class ProfileViewSerializer(serializers.ModelSerializer):
+    links = serializers.SerializerMethodField()
+
+    class Meta:
+        model = LinkProfile
+        fields = ('id', 'links', 'profile_title', 'description', 'avatar')
+
+    def get_links(self, obj):
+        links = Link.objects.filter(profile=obj)
+        data = LinkViewOnlySerializer(links, many=True).data
         return data

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from .serializers import UserCreateSerializer, LinkSerializer, LinkProfileSerializer
+from .serializers import UserCreateSerializer, ProfileViewSerializer, LinkProfileSerializer
 from rest_framework import status
 from . import models
 
@@ -36,3 +36,21 @@ def overview(request):
         user=request.user, profile_title=request.user.username)
     serializer = LinkProfileSerializer(profile)
     return Response({"data": serializer.data})
+
+
+@api_view(['GET'])
+@permission_classes((AllowAny, ))
+def getLinkFromUser(request, username):
+
+    try:
+        user = models.User.objects.get(username=username)
+        if not user:
+            return Response({"error": "user doesn't exist"}, status=status.HTTP_404_NOT_FOUND)
+        profile = models.LinkProfile.objects.get(user=user)
+        print(profile)
+        models.LinkProfile.objects.filter(
+            user=user).update(views=profile.views + 1)
+        serializer = ProfileViewSerializer(profile)
+        return Response({"data": serializer.data})
+    except:
+        return Response({"error": "something went wrong"}, status=status.HTTP_400_BAD_REQUEST)
