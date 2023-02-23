@@ -44,13 +44,12 @@ def getLinkFromUser(request, username):
 
     try:
         user = models.User.objects.get(username=username)
-        if not user:
-            return Response({"error": "user doesn't exist"}, status=status.HTTP_404_NOT_FOUND)
         profile = models.LinkProfile.objects.get(user=user)
-        print(profile)
         models.LinkProfile.objects.filter(
             user=user).update(views=profile.views + 1)
         serializer = ProfileViewSerializer(profile)
         return Response({"data": serializer.data})
+    except models.User.DoesNotExist:
+        return Response({"error": "user doesn't exist"}, status=status.HTTP_404_NOT_FOUND)
     except:
         return Response({"error": "something went wrong"}, status=status.HTTP_400_BAD_REQUEST)
