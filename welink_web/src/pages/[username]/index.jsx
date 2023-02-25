@@ -50,21 +50,27 @@ export async function getServerSideProps(context) {
       },
     };
   } catch (error) {
-    console.log(error.response.status);
-    switch (error.response.status) {
-      case 404:
-        return {
-          props: {
-            data: "User does't exist",
-          },
-        };
-      default:
-        return {
-          props: {
-            data: "Something went wrong",
-          },
-        };
+    if (error.status) {
+      switch (error.response.status) {
+        case 404:
+          return {
+            props: {
+              data: "User does't exist",
+            },
+          };
+        default:
+          return {
+            props: {
+              data: "Something went wrong",
+            },
+          };
+      }
     }
+    return {
+      props: {
+        data: "Could't reach the server ⚠️",
+      },
+    };
   }
 }
 
