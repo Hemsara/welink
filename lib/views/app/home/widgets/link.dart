@@ -54,8 +54,7 @@ class _LinkState extends State<Link> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(0),
                               image: DecorationImage(
-                                  image: NetworkImage(
-                                      'http://127.0.0.1:8000${widget.link.icon}'),
+                                  image: NetworkImage(widget.link.icon),
                                   fit: BoxFit.cover)),
                         ),
                 ),
@@ -70,7 +69,9 @@ class _LinkState extends State<Link> {
                           TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
                     ),
                     Text(
-                      widget.link.href,
+                      widget.link.href.split("").length < 35
+                          ? widget.link.href
+                          : "${widget.link.href.substring(0, 35)}...",
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 12,

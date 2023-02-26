@@ -3,6 +3,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:we_link_app/res/colors.dart';
 import 'package:we_link_app/views/app/edit/edit_screen.dart';
 import 'package:we_link_app/views/app/home/home_screen.dart';
+import 'package:we_link_app/views/app/links/link_list.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -15,6 +16,7 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
+    LinkListScreen(),
     Text(
       'Index 1: Business',
     ),
@@ -41,6 +43,10 @@ class _HomeState extends State<Home> {
               icon: Icon(Iconsax.home),
             ),
             BottomNavigationBarItem(
+              label: "Links",
+              icon: Icon(Iconsax.link_1),
+            ),
+            BottomNavigationBarItem(
               label: "Stats",
               icon: Icon(Iconsax.chart),
             ),
@@ -55,9 +61,7 @@ class _HomeState extends State<Home> {
           ]),
       backgroundColor: AppColors.scaffoldColor,
       body: SafeArea(
-        child: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
-        ),
+        child: _widgetOptions.elementAt(_selectedIndex),
       ),
     );
   }

@@ -20,9 +20,8 @@ const Link = ({ id, title, icon, link, style, radius }) => {
       );
       router.push(`https://www.${link}`);
     } catch (error) {
-      alert("Could't record the click")
+      alert("Could't record the click");
       router.push(`https://www.${link}`);
-
     }
   }
   return (
@@ -43,11 +42,11 @@ const Link = ({ id, title, icon, link, style, radius }) => {
       style={{ borderRadius: radius }}
     >
       <div className={styles.icon}>
-        <img src={`http://127.0.0.1:8000${icon}`} alt="" />
+        <img src={icon} alt="" />
       </div>
       <div className={styles.data}>
         <h4>{title}</h4>
-        <p>{link}</p>
+        <p>{link.length < 35 ? link : link.substring(0, 35) + "....."}</p>
       </div>
     </div>
   );

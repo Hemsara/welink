@@ -11,8 +11,8 @@ const LinkView = (props) => {
       className={styles.link_preview}
       style={{
         background: `linear-gradient(${
-          props.data.gradient_up ? 180 : 0
-        }deg, rgba(198, 198, 200, 1) 0%, rgba(250, 250, 250, 1) 28%, #${props.data.color_hex.slice(
+          props.data.gradient_up ? 0 : 180
+        }deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 28%, #${props.data.color_hex.slice(
           2
         )} 100%)`,
       }}

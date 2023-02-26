@@ -7,6 +7,7 @@ import 'package:we_link_app/providers/auth_provider.dart';
 import 'package:we_link_app/providers/links_provider.dart';
 import 'package:we_link_app/res/constants.dart';
 import 'package:we_link_app/services/network_service.dart';
+import 'package:we_link_app/views/app/links/screens/add_link.dart';
 import 'package:we_link_app/views/auth/create_account_screen.dart';
 import 'package:we_link_app/views/auth/login_screen.dart';
 import 'package:we_link_app/views/app/home.dart';
@@ -41,6 +42,7 @@ class WeLinkApp extends StatelessWidget {
       routes: {
         '/home': (context) => Home(),
         '/login': (context) => LoginScreen(),
+        '/add': (context) => AddLinkScreen(),
         '/signup': (context) => CreateAccountScreen(),
       },
       debugShowCheckedModeBanner: false,

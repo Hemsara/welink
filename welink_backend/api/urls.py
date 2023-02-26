@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import registerUser, checkAuthenticated, overview, RecordClick, getLinkFromUser, getStyles, updateProfile
+from .views import registerUser, checkAuthenticated, overview, RecordClick, getLinkFromUser, getStyles, updateProfile, saveLink
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
@@ -11,5 +11,7 @@ urlpatterns = [
     path('styles', getStyles),
     path('profile/update', updateProfile),
     path('click/record/<int:id>', RecordClick),
+    path('links/create/', saveLink),
+
 
 ]

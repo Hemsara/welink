@@ -25,8 +25,8 @@ class LinkProfile(models.Model):
 class Link(models.Model):
     profile = models.ForeignKey("LinkProfile", on_delete=models.CASCADE)
     label = models.CharField(max_length=50)
-    href = models.CharField(max_length=50)
-    icon = models.ImageField()
+    href = models.CharField(max_length=2550)
+    icon = models.CharField(max_length=2550)
     clicks = models.IntegerField(default=0)
 
 

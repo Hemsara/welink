@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from .serializers import UserCreateSerializer, ProfileViewSerializer, LinkProfileSerializer, LinkStyleSerializer, ProfileUpdateSerializer
+from .serializers import UserCreateSerializer, ProfileViewSerializer, LinkProfileSerializer, LinkStyleSerializer, ProfileUpdateSerializer, LinkSerializer
 from rest_framework import status
 from . import models
 
@@ -15,6 +15,17 @@ def registerUser(request):
         Newuser = serializer.save()
         if Newuser:
             return Response(status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@permission_classes((AllowAny, ))
+def saveLink(request):
+    serializer = LinkSerializer(data=request.data)
+    if serializer.is_valid():
+        Newuser = serializer.save()
+        if Newuser:
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

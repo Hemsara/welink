@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:we_link_app/models/links/link.dart';
 import 'package:we_link_app/models/links/link_profile.dart';
 import 'package:we_link_app/models/links/style.dart';
 import 'package:we_link_app/models/others/response.dart';
@@ -62,6 +63,23 @@ class LinkProvider extends ChangeNotifier {
       _saving = false;
       notifyListeners();
 
+      return res;
+    } catch (e) {
+      return Response(status: ResponseStatus.failed, errors: [e.toString()]);
+    }
+  }
+
+  Future<Response> saveLink({required Map<String, dynamic> data}) async {
+    try {
+      _saving = true;
+      notifyListeners();
+
+      await Future.delayed(Duration(seconds: 1));
+      Response res = await _networkService.post(
+          data: data, mustAuthenticated: true, endpoint: '/links/create/');
+      profile.links.add(LinkModel.fromJson(res.data!));
+      _saving = false;
+      notifyListeners();
       return res;
     } catch (e) {
       return Response(status: ResponseStatus.failed, errors: [e.toString()]);
