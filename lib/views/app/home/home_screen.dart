@@ -234,7 +234,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           GestureDetector(
                             onTap: () async {
                               await Clipboard.setData(ClipboardData(
-                                text: "we.link/${value.profile.user.username}",
+                                text:
+                                    "http://localhost:3000/${value.profile.user.username}",
                               ));
 
                               final snackBar = SnackBar(

@@ -1,8 +1,14 @@
 .link_preview {
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #F4F6F8;
+
+
     height: 100vh;
 
     .center {
@@ -49,16 +55,26 @@
 
 }
 
+.shadow_hard {
+    box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 0.75);
+}
+
+.shadow_soft {
+    box-shadow: 3px 3px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
 .link {
+
+
     cursor: pointer;
     transition-duration: 0.5s;
     display: flex;
     align-items: center;
-    border-radius: 5px;
     width: 370px;
     padding: 10px;
     margin-top: 10px;
-    background-color: #ffffff;
+    border: 1px solid black;
+
 
 
     &:hover {

@@ -14,6 +14,12 @@ class LinkProfile(models.Model):
     views = models.IntegerField(null=True, blank=True, default=0)
     user = models.OneToOneField("User", on_delete=models.CASCADE)
     avatar = models.ImageField(null=True, blank=True)
+    # decoration
+    color_hex = models.CharField(max_length=10, null=True)
+    radius = models.IntegerField(null=True, default=0)
+    gradient_up = models.BooleanField(default=True)
+    flat_color = models.BooleanField(default=False)
+    style = models.ForeignKey("LinkStyle", on_delete=models.CASCADE, null=True)
 
 
 class Link(models.Model):
@@ -22,3 +28,10 @@ class Link(models.Model):
     href = models.CharField(max_length=50)
     icon = models.ImageField()
     clicks = models.IntegerField(default=0)
+
+
+class LinkStyle(models.Model):
+    name = models.CharField(max_length=50)
+    isFilled = models.BooleanField()
+    isHardShadow = models.BooleanField(default=False)
+    isSoftShadow = models.BooleanField(default=False)

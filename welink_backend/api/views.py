@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from .serializers import UserCreateSerializer, ProfileViewSerializer, LinkProfileSerializer
+from .serializers import UserCreateSerializer, ProfileViewSerializer, LinkProfileSerializer, LinkStyleSerializer, ProfileUpdateSerializer
 from rest_framework import status
 from . import models
 
@@ -41,7 +41,6 @@ def overview(request):
 @api_view(['GET'])
 @permission_classes((AllowAny, ))
 def getLinkFromUser(request, username):
-
     try:
         user = models.User.objects.get(username=username)
         profile = models.LinkProfile.objects.get(user=user)
@@ -51,5 +50,40 @@ def getLinkFromUser(request, username):
         return Response({"data": serializer.data})
     except models.User.DoesNotExist:
         return Response({"error": "user doesn't exist"}, status=status.HTTP_404_NOT_FOUND)
+    except:
+        return Response({"error": "something went wrong"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+def getStyles(request):
+    styles = models.LinkStyle.objects.all()
+    print(styles)
+    serializer = LinkStyleSerializer(styles, many=True)
+    return Response({"data": serializer.data})
+
+
+@api_view(['PATCH'])
+@permission_classes((IsAuthenticated, ))
+def updateProfile(request):
+    profile = models.LinkProfile.objects.get(user=request.user)
+    serializer = ProfileUpdateSerializer(
+        data=request.data, instance=profile, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"status": "updated"}, status=status.HTTP_201_CREATED)
+    print(serializer.errors)
+    return Response({"error": serializer.error_messages})
+
+
+@api_view(['POST'])
+@permission_classes((AllowAny, ))
+def RecordClick(request, id):
+    try:
+        link = models.Link.objects.get(id=id)
+        print(link)
+        models.Link.objects.filter(id=id).update(clicks=link.clicks + 1)
+        return Response({"status": "success"})
+
     except:
         return Response({"error": "something went wrong"}, status=status.HTTP_400_BAD_REQUEST)

@@ -5,9 +5,18 @@ import Head from "next/head";
 import { AiOutlineUser } from "react-icons/ai";
 const LinkView = (props) => {
   //   console.log(router.query["username"]);
-  console.log(props.data);
+  console.log(props.data.gradient_up);
   return typeof props.data !== "string" ? (
-    <div className={styles.link_preview}>
+    <div
+      className={styles.link_preview}
+      style={{
+        background: `linear-gradient(${
+          props.data.gradient_up ? 180 : 0
+        }deg, rgba(198, 198, 200, 1) 0%, rgba(250, 250, 250, 1) 28%, #${props.data.color_hex.slice(
+          2
+        )} 100%)`,
+      }}
+    >
       <Head>
         <title>WeLink | {props.data.profile_title}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -26,7 +35,14 @@ const LinkView = (props) => {
         <p>{props.data.description}</p>
         <div className={styles.link_list}>
           {props.data.links.map((e) => (
-            <Link title={e.label} link={e.href} icon={e.icon} />
+            <Link
+              id={e.id}
+              title={e.label}
+              link={e.href}
+              icon={e.icon}
+              style={props.data.style}
+              radius={props.data.radius}
+            />
           ))}
         </div>
       </div>
@@ -50,6 +66,7 @@ export async function getServerSideProps(context) {
       },
     };
   } catch (error) {
+    console.log(error);
     if (error.status) {
       switch (error.response.status) {
         case 404:

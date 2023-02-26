@@ -1,7 +1,47 @@
 import styles from "../styles/Home.module.scss";
-const Link = ({ title, icon, link }) => {
+import axios from "axios";
+import { useRouter } from "next/navigation";
+
+const Link = ({ id, title, icon, link, style, radius }) => {
+  const router = useRouter();
+
+  console.log(style);
+
+  async function handleClick(id) {
+    console.log("clicked");
+    try {
+      const { data } = await axios.post(
+        `http://127.0.0.1:8000/api/click/record/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      router.push(`https://www.${link}`);
+    } catch (error) {
+      alert("Could't record the click")
+      router.push(`https://www.${link}`);
+
+    }
+  }
   return (
-    <div className={styles.link}>
+    // <a
+    //   href={`https://www.${link}`}
+    //   target="_blank"
+    //   onClick={() => handleClick(id)}
+    // >
+    <div
+      onClick={() => handleClick(id)}
+      className={`${styles.link} ${
+        style.isHardShadow
+          ? styles.shadow_hard
+          : style.isSoftShadow
+          ? styles.shadow_soft
+          : ""
+      } `}
+      style={{ borderRadius: radius }}
+    >
       <div className={styles.icon}>
         <img src={`http://127.0.0.1:8000${icon}`} alt="" />
       </div>
