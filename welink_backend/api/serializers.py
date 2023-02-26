@@ -82,7 +82,7 @@ class ProfileViewSerializer(serializers.ModelSerializer):
                   'description', 'avatar', 'style', 'radius', 'gradient_up', 'color_hex')
 
     def get_links(self, obj):
-        links = Link.objects.filter(profile=obj)
+        links = Link.objects.filter(profile=obj, visible=True)
         data = LinkViewOnlySerializer(links, many=True).data
         return data
 

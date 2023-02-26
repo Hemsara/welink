@@ -17,7 +17,16 @@ class DetailedLinkView extends StatefulWidget {
 }
 
 class _DetailedLinkViewState extends State<DetailedLinkView> {
-  bool switchValue = true;
+  late bool switchValue;
+
+  @override
+  void initState() {
+    setState(() {
+      switchValue = widget.link.visible;
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

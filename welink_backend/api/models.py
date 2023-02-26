@@ -28,6 +28,7 @@ class Link(models.Model):
     href = models.CharField(max_length=2550)
     icon = models.CharField(max_length=2550)
     clicks = models.IntegerField(default=0)
+    visible = models.BooleanField(default=True)
 
 
 class LinkStyle(models.Model):
