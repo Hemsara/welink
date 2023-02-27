@@ -15,7 +15,13 @@ class Link extends StatefulWidget {
 }
 
 class _LinkState extends State<Link> {
-  bool switchValue = true;
+  late bool switchValue;
+
+  @override
+  void initState() {
+    switchValue = widget.link.visible;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

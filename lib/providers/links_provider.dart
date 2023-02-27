@@ -57,7 +57,7 @@ class LinkProvider extends ChangeNotifier {
       _saving = true;
       notifyListeners();
 
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       Response res = await _networkService.update(
           data: data, mustAuthenticated: true, endpoint: '/profile/update');
       _saving = false;
@@ -74,12 +74,25 @@ class LinkProvider extends ChangeNotifier {
       _saving = true;
       notifyListeners();
 
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       Response res = await _networkService.post(
           data: data, mustAuthenticated: true, endpoint: '/links/create/');
       profile.links.add(LinkModel.fromJson(res.data!));
       _saving = false;
       notifyListeners();
+      return res;
+    } catch (e) {
+      return Response(status: ResponseStatus.failed, errors: [e.toString()]);
+    }
+  }
+
+  Future<Response> updateVisibility(int id) async {
+    try {
+      await Future.delayed(const Duration(milliseconds: 100));
+      Response res = await _networkService.update(
+          data: {},
+          mustAuthenticated: true,
+          endpoint: '/links/updateVisibility/$id');
       return res;
     } catch (e) {
       return Response(status: ResponseStatus.failed, errors: [e.toString()]);

@@ -2,10 +2,11 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 import 'package:we_link_app/models/links/link.dart';
+import 'package:we_link_app/models/others/response.dart';
+import 'package:we_link_app/providers/links_provider.dart';
 
 class DetailedLinkView extends StatefulWidget {
   final LinkModel link;
@@ -18,6 +19,7 @@ class DetailedLinkView extends StatefulWidget {
 
 class _DetailedLinkViewState extends State<DetailedLinkView> {
   late bool switchValue;
+  bool visibilityUpdating = false;
 
   @override
   void initState() {
@@ -35,9 +37,14 @@ class _DetailedLinkViewState extends State<DetailedLinkView> {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 255, 255, 255),
-          borderRadius: BorderRadius.circular(15),
-        ),
+            color: Color.fromARGB(255, 255, 255, 255),
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                  color: Color.fromARGB(255, 246, 246, 246),
+                  offset: Offset(5.0, 5.0),
+                  blurRadius: 10)
+            ]),
         child: Column(
           children: [
             Row(
@@ -75,9 +82,9 @@ class _DetailedLinkViewState extends State<DetailedLinkView> {
                               fontWeight: FontWeight.w600, fontSize: 15),
                         ),
                         Text(
-                          widget.link.href.split("").length < 35
+                          widget.link.href.split("").length < 30
                               ? widget.link.href
-                              : "${widget.link.href.substring(0, 35)}...",
+                              : "${widget.link.href.substring(0, 30)}...",
                           style: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 12,
@@ -87,17 +94,37 @@ class _DetailedLinkViewState extends State<DetailedLinkView> {
                     ),
                   ],
                 ),
-                Transform.scale(
-                  scale: 0.75,
-                  child: CupertinoSwitch(
-                    value: switchValue,
-                    activeColor: CupertinoColors.activeGreen,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        switchValue = value ?? false;
-                      });
-                    },
-                  ),
+                Row(
+                  children: [
+                    SizedBox(
+                      child: visibilityUpdating
+                          ? CupertinoActivityIndicator(
+                              radius: 7,
+                            )
+                          : null,
+                    ),
+                    Transform.scale(
+                      scale: 0.75,
+                      child: CupertinoSwitch(
+                        value: switchValue,
+                        activeColor: CupertinoColors.activeGreen,
+                        onChanged: (bool? value) async {
+                          setState(() {
+                            visibilityUpdating = true;
+                          });
+                          Response res = await context
+                              .read<LinkProvider>()
+                              .updateVisibility(widget.link.id);
+                          if (res.status == ResponseStatus.success) {
+                            setState(() {
+                              switchValue = value ?? false;
+                              visibilityUpdating = false;
+                            });
+                          }
+                        },
+                      ),
+                    ),
+                  ],
                 ),
                 // PopupMenuButton(
                 //   icon: Icon(

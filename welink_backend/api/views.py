@@ -98,3 +98,18 @@ def RecordClick(request, id):
 
     except:
         return Response({"error": "something went wrong"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PATCH'])
+@permission_classes((AllowAny, ))
+def updateVisibility(request, id):
+    try:
+        link = models.Link.objects.get(id=id)
+        print(link)
+        models.Link.objects.filter(id=id).update(
+            visible=not link.visible)
+        return Response({"status": "success"})
+    except models.Link.DoesNotExist:
+        return Response({"error": "link doesn't exist"}, status=status.HTTP_404_NOT_FOUND)
+    except:
+        return Response({"error": "something went wrong"}, status=status.HTTP_400_BAD_REQUEST)
