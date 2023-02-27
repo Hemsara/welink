@@ -18,10 +18,11 @@ const Link = ({ id, title, icon, link, style, radius }) => {
           },
         }
       );
-      router.push(`https://www.${link}`);
+
+      let url = link.match(/^https?:/) ? link : "http://" + link;
+      window.open(url, "_blank");
     } catch (error) {
-      alert("Could't record the click");
-      router.push(`https://www.${link}`);
+      window.open(url, "_blank");
     }
   }
   return (
