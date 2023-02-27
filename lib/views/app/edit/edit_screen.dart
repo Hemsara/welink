@@ -23,7 +23,7 @@ class EditLinkProfile extends StatefulWidget {
 }
 
 class _EditLinkProfileState extends State<EditLinkProfile> {
-  double _currentSliderValue = 0;
+  late double _currentSliderValue;
   late int selectedStyleIndex;
   late bool gradientUp;
   late bool flatColor;
@@ -107,7 +107,8 @@ class _EditLinkProfileState extends State<EditLinkProfile> {
       flatColor = context.read<LinkProvider>().profile.flatColor;
       currentColor = context.read<LinkProvider>().profile.bgColor;
       pickerColor = context.read<LinkProvider>().profile.bgColor;
-
+      _currentSliderValue =
+          context.read<LinkProvider>().profile.radius.toDouble();
       _titleCTRL = TextEditingController();
       _bioCTRL = TextEditingController();
 

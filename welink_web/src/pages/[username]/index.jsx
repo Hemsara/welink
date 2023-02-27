@@ -1,6 +1,7 @@
 import Link from "@/components/Link";
 import styles from "../../styles/Home.module.scss";
 import axios from "axios";
+import logo from "../../../public/logo.png";
 import Head from "next/head";
 import { AiOutlineUser } from "react-icons/ai";
 const LinkView = (props) => {

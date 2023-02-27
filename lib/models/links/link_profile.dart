@@ -25,6 +25,7 @@ class LinkProfile {
   final String profileTitle;
   final String description;
   final int views;
+  final int radius;
   final bool gradient_up;
   final bool flatColor;
   final Color bgColor;
@@ -39,6 +40,7 @@ class LinkProfile {
     required this.user,
     required this.clicks,
     required this.profileTitle,
+    required this.radius,
     required this.gradient_up,
     required this.description,
     required this.bgColor,
@@ -53,6 +55,7 @@ class LinkProfile {
 
     return LinkProfile(
         id: parsedJson[LinkProfileFields.id],
+        radius: parsedJson[LinkProfileFields.radius],
         bgColor:
             Color(int.parse('0xff${parsedJson[LinkProfileFields.bgColor]}')),
         clicks: parsedJson[LinkProfileFields.clicks],

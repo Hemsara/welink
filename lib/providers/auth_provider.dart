@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:we_link_app/models/others/response.dart';
@@ -23,7 +25,7 @@ class AuthProvider extends ChangeNotifier {
           endpoint: '/login/',
           data: {"username": username, "password": password});
       if (res.status == ResponseStatus.success) {
-        final storage = FlutterSecureStorage();
+        const storage = FlutterSecureStorage();
         await storage.deleteAll();
         await storage.write(key: 'token', value: res.data!['token']);
       }
@@ -31,8 +33,16 @@ class AuthProvider extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
       return res;
+    } on SocketException {
+      _isLoading = false;
+      notifyListeners();
+      return Response(
+          status: ResponseStatus.failed,
+          errors: ["Unable to connect to the server"]);
     } catch (e) {
-      return Response(status: ResponseStatus.failed, errors: [e]);
+      _isLoading = false;
+      notifyListeners();
+      return Response(status: ResponseStatus.failed, errors: [e.toString()]);
     }
   }
 
@@ -56,8 +66,7 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
       return rs;
     } catch (e) {
-      return Response(
-          status: ResponseStatus.failed, errors: ["something went wrong"]);
+      return Response(status: ResponseStatus.failed, errors: [e.toString()]);
     }
   }
 }
