@@ -94,6 +94,27 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   PopupMenuItem(
+                    onTap: () => context.read<LinkProvider>().getOverview(),
+                    value: 'Home',
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text(
+                          'Refresh',
+                          style: TextStyle(
+                              color: Colors.black45,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        Icon(
+                          Iconsax.refresh,
+                          size: 16,
+                          color: Colors.black45,
+                        )
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem(
                     value: 'Home',
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
